@@ -34,6 +34,7 @@ logger.log = function() {
 //vtg.tracking.Log.logger = logger;
 vtg.tracking.SystemInfo.isDev = () => { return false };
 
-window && logger.log('window->' + typeof window);
-window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
-window.localStorage && logger.log('localStorage->', window.localStorage);
+// window && logger.log('window->' + typeof window);
+// window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
+// window.localStorage && logger.log('localStorage->', window.localStorage);
+

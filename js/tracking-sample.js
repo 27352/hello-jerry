@@ -52,6 +52,14 @@ function getContextData() {
     };
 }
 
+function logInfo() {console.log('LOGGING');
+    $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
+
+    window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
+    window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
+    window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('main');
     var video = document.getElementById('testVideo');
@@ -70,7 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
             tracker.track("contentEnd");
             tracker.track("sessionEnd");
             hasEnded = true;
+            logInfo();
         }
     };
 
 });
+
+if ($badger && $badger.active()) {
+    logInfo();
+}
+
+else {
+    document.addEventListener('onMoneyBadgerReady', () => {
+        logInfo();
+    })
+}
