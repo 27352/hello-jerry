@@ -52,6 +52,22 @@ function getContextData() {
     };
 }
 
+// var logger = {
+//     log: function() {
+//         console && console.log && console.log.apply(console, arguments);
+//         for (var i in arguments.length) {}
+//     }
+// };
+
+// var logger = (function() {
+//     return {
+//         log: function() {
+//             document.getElementById('log').innerHTML += arguments;
+//             console && console.log && console.log.apply(console, arguments);
+//         }
+//     }
+// })();
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('main');
     var video = document.getElementById('testVideo');
