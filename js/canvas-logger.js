@@ -20,21 +20,22 @@ logger.log = function() {
         output[i] = arguments[i];
     }
 
+    var msg = output.join(' ');
+
+    console && console.log(msg);
+
     canvas.appendChild(
-        document.createTextNode( output.join(' ') )
+        document.createTextNode(msg)
     );
 
     canvas.appendChild(
         document.createElement('br')
     );
-
-    //canvas.innerHTML += output.join(' ') + '<br/>';
 };
 
 //vtg.tracking.Log.logger = logger;
 vtg.tracking.SystemInfo.isDev = () => { return false };
 
-// window && logger.log('window->' + typeof window);
-// window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
-// window.localStorage && logger.log('localStorage->', window.localStorage);
-
+window && logger.log('window->' + typeof window);
+window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
+window.localStorage && logger.log('localStorage->', window.localStorage);
