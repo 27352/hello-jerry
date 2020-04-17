@@ -53,6 +53,10 @@ function getContextData() {
 }
 
 function logInfo() {console.log('LOGGING');
+    window && logger.log('window->' + typeof window);
+    window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
+    window.localStorage && logger.log('localStorage->', window.localStorage);
+
     $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
 
     window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
