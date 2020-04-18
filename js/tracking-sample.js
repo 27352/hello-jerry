@@ -54,18 +54,22 @@ function getContextData() {
 
 function logInfo() {console.log('LOGGING');
     window && logger.log('window->' + typeof window);
+
     window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
     window.localStorage && logger.log('localStorage->', window.localStorage);
+    window.document.cookie && logger.log('cookie->', window.document.cookie);
 
-    $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
+    document.cookie = 'rpm=500';
 
-    window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
-    window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
-    window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
+    // $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
+
+    // window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
+    // window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
+    // window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('main');
+    console.log('[main]');
     var video = document.getElementById('testVideo');
     var tracker = new vtg.tracking.VideoTracker();
     var hasEnded = false;
@@ -81,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (video.currentTime > video.duration * .98 && !hasEnded) {
             tracker.track("contentEnd");
             tracker.track("sessionEnd");
+
             hasEnded = true;
             logInfo();
         }
@@ -88,12 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-if ($badger && $badger.active()) {
-    logInfo();
-}
+// if ($badger && $badger.active()) {
+//     logInfo();
+// }
 
-else {
-    document.addEventListener('onMoneyBadgerReady', () => {
-        logInfo();
-    })
-}
+// else {
+//     document.addEventListener('onMoneyBadgerReady', () => {
+//         logInfo();
+//     })
+// }
