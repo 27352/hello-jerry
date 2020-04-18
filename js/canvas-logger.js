@@ -34,5 +34,5 @@ logger.log = function() {
 };
 
 //vtg.tracking.Log.logger = logger;
-vtg.tracking.SystemInfo.isDev = () => { return false };
+vtg.tracking.SystemInfo.isDev = () => { return true };
 logInfo();
