@@ -32,7 +32,3 @@ logger.log = function() {
         document.createElement('br')
     );
 };
-
-//vtg.tracking.Log.logger = logger;
-//vtg.tracking.SystemInfo.isDev = () => { return true };
-//logInfo();

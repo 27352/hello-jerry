@@ -61,11 +61,13 @@ function logInfo() {console.log('LOGGING');
 
     document.cookie = 'rpm=500';
 
-    // $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
+    $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
 
-    // window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
-    // window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
-    // window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
+    window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
+    window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
+    window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
+    window.document.cookie && $badger.metricsHandler('COOKIE', window.document.cookie);
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -93,12 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// if ($badger && $badger.active()) {
-//     logInfo();
-// }
+if ($badger && $badger.active()) {
+    logInfo();
+}
 
-// else {
-//     document.addEventListener('onMoneyBadgerReady', () => {
-//         logInfo();
-//     })
-// }
+else {
+    document.addEventListener('onMoneyBadgerReady', () => {
+        logInfo();
+    })
+}
