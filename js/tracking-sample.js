@@ -61,13 +61,14 @@ function logInfo() {console.log('LOGGING');
 
     document.cookie = 'rpm=500';
 
-    $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
+    if (window.$badger) {
+        $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
 
-    window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
-    window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
-    window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
-    window.document.cookie && $badger.metricsHandler('COOKIE', window.document.cookie);
-
+        window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
+        window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
+        window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
+        window.document.cookie && $badger.metricsHandler('COOKIE', window.document.cookie);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -95,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-if ($badger && $badger.active()) {
+if (window.$badger && window.$badger.active()) {
     logInfo();
 }
 
