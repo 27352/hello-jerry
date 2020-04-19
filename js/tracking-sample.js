@@ -65,6 +65,10 @@ function logInfo() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    var script = document.createElement('script');
+    script.src = 'js/conviva-core-html5.js';
+    document.getElementsByTagName('head')[0].appendChild(script);
+
     var video = document.getElementById('testVideo');
     var tracker = new vtg.tracking.VideoTracker();
     var hasEnded = false;
