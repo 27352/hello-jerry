@@ -22,8 +22,6 @@ logger.log = function() {
 
     var msg = output.join(' ');
 
-    console && console.log(msg);
-
     canvas.appendChild(
         document.createTextNode(msg)
     );
@@ -33,4 +31,5 @@ logger.log = function() {
     );
 };
 
-logInfo();
+//logger.warn = logger.info = logger.log;
+//vtg.tracking.Log.logger = logger;

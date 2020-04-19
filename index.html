@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <title>Tracking Sample</title>
-    <script></script>
     <script src="https://tags.tiqcdn.com/utag/cbsi/vtg-sandbox/dev/utag.js"></script>
+    <script src="js/storage-polyfill.js"></script>
+    <script src="js/canvas-logger.js"></script>
     <script src="js/tracking-sample.js"></script>
     <!-- <script src="https://cdn.thor.comcast.com/sdk/money-badger.min.js"></script> -->
 </head>
@@ -12,10 +13,12 @@
         id="testVideo"
         src="https://vjs.zencdn.net/v/oceans.mp4"
         poster="https://vjs.zencdn.net/v/oceans.png"
-        width="100"
+        width="200"
         autoplay>
     </video>
-    <div id="log" style="color:coral;"></div>
-    <script src="js/canvas-logger.js"></script>
+    <div id="log" style="font-size:large; color:coral;"></div>
+    <script>
+        logInfo();
+    </script>
 </body>
 </html>

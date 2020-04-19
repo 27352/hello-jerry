@@ -52,7 +52,7 @@ function getContextData() {
     };
 }
 
-function logInfo() {console.log('LOGGING');
+function logInfo() {
     window && logger.log('window->' + typeof window);
 
     window.XMLHttpRequest && logger.log('XMLHttpRequest->' + typeof XMLHttpRequest);
@@ -61,18 +61,10 @@ function logInfo() {console.log('LOGGING');
 
     document.cookie = 'rpm=500';
 
-    if (window.$badger) {
-        $badger.metricsHandler("SESSION_END", { result: 'sessionEnd' });
-
-        window && $badger.metricsHandler("WINDOW_VALIDATED", { result: typeof window });
-        window.XMLHttpRequest && $badger.metricsHandler("XHR_VALIDATED", { result: typeof window.XMLHttpRequest });
-        window.localStorage && $badger.metricsHandler("STORAGE_VALIDATED", { result: typeof window.localStorage });
-        window.document.cookie && $badger.metricsHandler('COOKIE', window.document.cookie);
-    }
+    logger.log('MID:', vtg.tracking.DataStorage.get('d_mid'));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[main]');
     var video = document.getElementById('testVideo');
     var tracker = new vtg.tracking.VideoTracker();
     var hasEnded = false;
@@ -95,13 +87,3 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 });
-
-if (window.$badger && window.$badger.active()) {
-    logInfo();
-}
-
-else {
-    document.addEventListener('onMoneyBadgerReady', () => {
-        logInfo();
-    })
-}
