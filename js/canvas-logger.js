@@ -32,3 +32,5 @@ logger.log = function() {
         document.createElement('br')
     );
 };
+
+logInfo();
