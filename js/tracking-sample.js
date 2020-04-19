@@ -61,7 +61,7 @@ function logInfo() {
 
     document.cookie = 'rpm=500';
 
-    logger.log('MID:', vtg.tracking.DataStorage.get('d_mid'));
+    logger.log('MID:', vtg.tracking.DataStorage.get('d_mid') || 'none');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
