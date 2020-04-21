@@ -20,11 +20,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -62,6 +61,18 @@ function Injectable(injectable) {
     };
 }
 exports.Injectable = Injectable;
+var Log = /** @class */ (function () {
+    function Log() {
+    }
+    Log.setLogger = function (logger) {
+        if (typeof logger === 'object' && typeof logger.log === 'function') {
+            Log.logger = logger;
+        }
+    };
+    Log.logger = console || null;
+    return Log;
+}());
+exports.Log = Log;
 /**
  * Defines a one-to-many dependency between objects so that when one object
  * changes state, all its dependents are notified and updated automatically.
@@ -126,7 +137,7 @@ var SystemInfo = /** @class */ (function () {
         return !!(DataLayer.get('ut.env') === 'dev');
     };
     // Version is populated at build time
-    SystemInfo.version = 'v0.6.1 4/20/2020';
+    SystemInfo.version = 'v0.6.1 4/21/2020';
     // Application Platform is populated at build time from bundle.config
     SystemInfo.platform = 'Comcast';
     SystemInfo.ssl = true;
@@ -197,6 +208,7 @@ var Cookie = /** @class */ (function () {
         return result;
     };
     Cookie.set = function (name, value) {
+        var document = View.getVar('document');
         if (!document) {
             return;
         }
@@ -210,6 +222,9 @@ var Cookie = /** @class */ (function () {
     return Cookie;
 }());
 exports.Cookie = Cookie;
+var dev = SystemInfo.isDev;
+var log = Log.logger.log;
+var msg = '[Http]';
 var HttpRequest = /** @class */ (function () {
     function HttpRequest() {
     }
@@ -217,12 +232,12 @@ var HttpRequest = /** @class */ (function () {
         var xhr = new XMLHttpRequest();
         var url = HttpRequest.makeUrl(options.ssl, options.url);
         var async = true;
-        logger.log('[DEBUG] POST', url);
         xhr.open('POST', url, async);
         xhr.setRequestHeader('Content-Type', options.type || 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 logger.log('[DEBUG] POST', url, xhr.status);
+                logger.log('[DEBUG] POST', xhr.responseText || 'none');
                 options.callback({
                     xhr: xhr,
                     status: xhr.status,
@@ -245,10 +260,10 @@ var HttpRequest = /** @class */ (function () {
         var xhr = new XMLHttpRequest();
         var url = HttpRequest.makeUrl(options.ssl, options.url.indexOf('?') === -1 ? options.url + '?' + options.data : options.url);
         var async = true;
-        logger.log('[DEBUG] GET', url);
         xhr.open('GET', url, async);
         xhr.onload = function () {
             logger.log('[DEBUG] GET', url, xhr.status);
+            logger.log('[DEBUG] GET', xhr.responseText || 'none');
             options.callback({
                 xhr: xhr,
                 status: xhr.status,
@@ -271,18 +286,6 @@ var HttpRequest = /** @class */ (function () {
     return HttpRequest;
 }());
 exports.HttpRequest = HttpRequest;
-var Log = /** @class */ (function () {
-    function Log() {
-    }
-    Log.setLogger = function (logger) {
-        if (typeof logger === 'object' && typeof logger.log === 'function') {
-            Log.logger = logger;
-        }
-    };
-    Log.logger = console || null;
-    return Log;
-}());
-exports.Log = Log;
 var Queue = /** @class */ (function () {
     function Queue() {
         this.items = [];
@@ -1962,7 +1965,9 @@ var SparrowDao = /** @class */ (function (_super) {
         for (var key in map) {
             qs.push(key + '=' + map[key]);
         }
-        return qs.join('&');
+        var encode = View.getVar('encodeURI');
+        var qsInfo = qs.join('&');
+        return typeof encode === 'function' ? encode(qsInfo) : qsInfo;
     };
     SparrowDao.prototype.getPlatform = function () {
         var data = this.agent.getData();

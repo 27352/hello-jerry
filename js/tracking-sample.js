@@ -24,7 +24,7 @@ function getContentInfo() {
     return {
         timeToStart   : 1000,
         mediaUrl      : 'resource.mediaUrl',
-        mediaId       : 'metadata.videoIdForTracking',
+        mediaId       : 'videoIdForTracking',
         duration      : 46,
         playhead      : 0,
         bitrate       : 54389,
