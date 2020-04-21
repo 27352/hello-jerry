@@ -20,10 +20,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -137,7 +138,7 @@ var SystemInfo = /** @class */ (function () {
         return !!(DataLayer.get('ut.env') === 'dev');
     };
     // Version is populated at build time
-    SystemInfo.version = 'v0.6.1 4/21/2020';
+    SystemInfo.version = 'v0.6.2 4/21/2020';
     // Application Platform is populated at build time from bundle.config
     SystemInfo.platform = 'Comcast';
     SystemInfo.ssl = true;
@@ -248,6 +249,7 @@ var HttpRequest = /** @class */ (function () {
             }
         };
         xhr.onerror = function () {
+            dev() && log(msg, url, xhr.status);
             options.callback({
                 xhr: xhr,
                 status: -1,
@@ -1960,6 +1962,7 @@ var SparrowDao = /** @class */ (function (_super) {
         data.platform = this.getPlatform();
         data.timestamp = Math.floor(data.timestamp / 1000);
         var map = this.mapData(this.metadataInfo);
+        map.medtime = 200 + data.playhead;
         var qs = [];
         // Append values from the data map
         for (var key in map) {
