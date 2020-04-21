@@ -5,7 +5,7 @@ function getSessionInfo() {
         playerName      : 'CVP',
         playerVersion   : '0.9.0',
         playerId        : 'df755f4f-fbef-48ed-9aee-60693669f74e',
-        userId          : '123123',
+        userId          : '7019547',
         userCountry     : 'us',
         partner         : 'partner',
         drmEnabled      : false,
