@@ -51,8 +51,10 @@ function getContextData() {
         /* conviva tag data */
         appName: 'VTG Test App',
         appVersion: '0.0.1',
+        drmType: 'the-drm-type',
         connectionType: 'the-connection-type',
         userRegId: 'the-user-reg-id',
+        userStatus: 'the-user-status',
         showSeriesId: 'the-show-series-id',
         deviceModel: 'the-device-model',
         osVersion: 'the-os-version'
