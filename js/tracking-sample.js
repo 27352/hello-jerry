@@ -47,8 +47,15 @@ function getContextData() {
     return {
         brandPlatformId: 'vtg-comcast-test',
         deviceType: 'IpStb',
-        deviceModel: 'AX061AEI',
-        deviceId: '2164714286419982419'
+        deviceId: '2164714286419982419',
+        /* conviva tag data */
+        appName: 'VTG Test App',
+        appVersion: '0.0.1',
+        connectionType: 'the-connection-type',
+        userRegId: 'the-user-reg-id',
+        showSeriesId: 'the-show-series-id',
+        deviceModel: 'the-device-model',
+        osVersion: 'the-os-version'
     };
 }
 
